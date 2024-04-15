@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>oceanbase遇到过的奇怪问题 | 摆烂仙人</title><meta name="author" content="xyyang"><meta name="copyright" content="xyyang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ubuntu系统上OBclient无法用backspacehttps:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;678874871 在ubuntu&#x2F;debian系列的系统上使用源代码编译OBclient1.下载obclient源代码 1git clone git@github.com:oceanbase&#x2F;obclient.git 这里下载必须使用git clone的方式,因为后面编译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oceanbase遇到过的奇怪问题">
+<meta property="og:url" content="https://yangxinyu7427.github.io/2024/04/10/oceanbase%E9%81%87%E5%88%B0%E8%BF%87%E7%9A%84%E5%A5%87%E6%80%AA%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="摆烂仙人">
+<meta property="og:description" content="ubuntu系统上OBclient无法用backspacehttps:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;678874871 在ubuntu&#x2F;debian系列的系统上使用源代码编译OBclient1.下载obclient源代码 1git clone git@github.com:oceanbase&#x2F;obclient.git 这里下载必须使用git clone的方式,因为后面编译">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yangxinyu7427.github.io/img/pic_typemoon.png">
+<meta property="article:published_time" content="2024-04-10T12:46:09.000Z">
+<meta property="article:modified_time" content="2024-04-15T07:03:11.427Z">
+<meta property="article:author" content="xyyang">
+<meta property="article:tag" content="oceanbase">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yangxinyu7427.github.io/img/pic_typemoon.png"><link rel="shortcut icon" href="/img/pic_arc.png"><link rel="canonical" href="https://yangxinyu7427.github.io/2024/04/10/oceanbase%E9%81%87%E5%88%B0%E8%BF%87%E7%9A%84%E5%A5%87%E6%80%AA%E9%97%AE%E9%A2%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.14.0-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>(()=>{
+      const saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+      
+      window.btf = {
+        saveToLocal: saveToLocal,
+        getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+          script.src = url
+          script.async = true
+          script.onerror = reject
+          script.onload = script.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            script.onload = script.onreadystatechange = null
+            resolve()
+          }
+
+          Object.keys(attr).forEach(key => {
+            script.setAttribute(key, attr[key])
+          })
+
+          document.head.appendChild(script)
+        }),
+
+        getCSS: (url, id = false) => new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+          link.rel = 'stylesheet'
+          link.href = url
+          if (id) link.id = id
+          link.onerror = reject
+          link.onload = link.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            link.onload = link.onreadystatechange = null
+            resolve()
+          }
+          document.head.appendChild(link)
+        }),
+
+        addGlobalFn: (key, fn, name = false, parent = window) => {
+          const pjaxEnable = false
+          if (!pjaxEnable && key.startsWith('pjax')) return
+
+          const globalFn = parent.globalFn || {}
+          const keyObj = globalFn[key] || {}
+    
+          if (name && keyObj[name]) return
+    
+          name = name || Object.keys(keyObj).length
+          keyObj[name] = fn
+          globalFn[key] = keyObj
+          parent.globalFn = globalFn
+        }
+      }
+    
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+      
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })()</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'oceanbase遇到过的奇怪问题',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-15 15:03:11'
+}</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/pic_asuka.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/pic_typemoon.png')"><nav id="nav"><span id="blog-info"><a href="/" title="摆烂仙人"><span class="site-name">摆烂仙人</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">oceanbase遇到过的奇怪问题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-10T12:46:09.000Z" title="发表于 2024-04-10 20:46:09">2024-04-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-15T07:03:11.427Z" title="更新于 2024-04-15 15:03:11">2024-04-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">问题记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="oceanbase遇到过的奇怪问题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="ubuntu系统上OBclient无法用backspace"><a href="#ubuntu系统上OBclient无法用backspace" class="headerlink" title="ubuntu系统上OBclient无法用backspace"></a>ubuntu系统上OBclient无法用backspace</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/678874871">https://zhuanlan.zhihu.com/p/678874871</a></p>
+<p>在ubuntu&#x2F;debian系列的系统上使用源代码编译OBclient<br>1.下载obclient源代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:oceanbase/obclient.git</span><br></pre></td></tr></table></figure>
+<p>这里下载必须使用git clone的方式,因为后面编译的时候还需要项目中的git信息编译前安装依赖</p>
+<p>2.安装依赖(debian&#x2F;ubuntu系统)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y git cmake gcc make libssl-dev libncurses5-dev rpm g++ bison libbison-dev zlib1g-dev libgnutls28-dev libxml2-dev libssl-dev libevent-dev libaio-dev libcrack2-dev</span><br></pre></td></tr></table></figure>
+
+<p>3.修改obclient源代码里的cmake&#x2F;ssl.cmake</p>
+<p>本来这里应该修改CMakeLists.txt 的第371 行 传递参数 yes,但是不知为什么改了没生效,就直接改cmake&#x2F;ssl.cmake文件了</p>
+<p>直接在第46行,前面随便找个位置 加入了 SET(WITH_SSL “yes”)</p>
+<p>4.复制ssl库文件</p>
+<p>下面命令都是在obclient的源代码路径中执行</p>
+<p>这里是编译时要依赖这两个文件,下面的路径是x86_64架构的路径,如果是arm架构,需要将路径中的x86_64换成aarch_64(不对的话自己用find查找一下这两个文件在哪)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p deps/3rd/usr/local/oceanbase/deps/devel/lib/</span><br><span class="line">cp /usr/lib/x86_64-linux-gnu/libcrypto.a deps/3rd/usr/local/oceanbase/deps/devel/lib/</span><br><span class="line">cp /usr/lib/x86_64-linux-gnu/libssl.a deps/3rd/usr/local/oceanbase/deps/devel/lib/</span><br></pre></td></tr></table></figure>
+
+<p>5.构建</p>
+<p>.&#x2F;build.sh</p>
+<p>6.获取OBclient可执行文件</p>
+<p>构建成功后,obclient会保存在 .&#x2F;client 文件夹下</p>
+<p>我最终是在debian系统上先用前面rpm转换出来的deb包安装上obclient,然后将重新编译出的这个obclient拿去替换&#x2F;u01&#x2F;obclient&#x2F;bin&#x2F;中安装的.</p>
+<h3 id="使用vscode-debug调试oceanbase"><a href="#使用vscode-debug调试oceanbase" class="headerlink" title="使用vscode debug调试oceanbase"></a>使用vscode debug调试oceanbase</h3><p>在vscode中安装下面插件<br><img src="/posts_pic/ob%E6%8F%92%E4%BB%B6.png" alt="Alt text"><br>编辑或添加 .vscode&#x2F;launch.json</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;version&quot;: &quot;0.2.0&quot;,</span><br><span class="line">    &quot;configurations&quot;: [</span><br><span class="line">    </span><br><span class="line">        &#123;</span><br><span class="line">            &quot;name&quot;: &quot;(gdb) Attach&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;cppdbg&quot;,</span><br><span class="line">            &quot;request&quot;: &quot;attach&quot;,</span><br><span class="line">            &quot;program&quot;: &quot;/root/.obd/repository/oceanbase-ce/4.1.0.1/oceanbase-ce/bin/observer&quot;,//根据自己情况修改</span><br><span class="line">            &quot;processId&quot;: &quot;$&#123;input:FindPID&#125;&quot;,</span><br><span class="line">            &quot;MIMode&quot;: &quot;gdb&quot;,</span><br><span class="line">            &quot;miDebuggerPath&quot;: &quot;gdb&quot;,</span><br><span class="line">            &quot;setupCommands&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;description&quot;: &quot;Enable pretty-printing for gdb&quot;,</span><br><span class="line">                    &quot;text&quot;: &quot;-enable-pretty-printing&quot;,</span><br><span class="line">                    &quot;ignoreFailures&quot;: true</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            &quot;sourceFileMap&quot;: &#123;</span><br><span class="line">                &quot;./build_debug/src/sql/./src/sql&quot;: &#123;</span><br><span class="line">                    &quot;editorPath&quot;: &quot;$&#123;workspaceFolder&#125;/src/sql&quot;,</span><br><span class="line">                    &quot;useForBreakpoints&quot;: true</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;inputs&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;id&quot;: &quot;FindPID&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;command&quot;,</span><br><span class="line">            &quot;command&quot;: &quot;shellCommand.execute&quot;,</span><br><span class="line">            &quot;args&quot;: &#123;</span><br><span class="line">                &quot;command&quot;: &quot;ps -aux | grep /bin/observer | grep -v grep | awk &#x27;&#123;print $2&#125;&#x27;&quot;,</span><br><span class="line">                &quot;description&quot;: &quot;Select your observer PID&quot;,</span><br><span class="line">                &quot;useFirstResult&quot;: true,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注：因为oceanbase有很多后台任务，会定时的执行SQL，所以调试时设置的断点有可能会命中后台任务执行的SQL，建议使用条件断点</p>
+<p>debug启动！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://yangxinyu7427.github.io">xyyang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://yangxinyu7427.github.io/2024/04/10/oceanbase%E9%81%87%E5%88%B0%E8%BF%87%E7%9A%84%E5%A5%87%E6%80%AA%E9%97%AE%E9%A2%98/">https://yangxinyu7427.github.io/2024/04/10/oceanbase%E9%81%87%E5%88%B0%E8%BF%87%E7%9A%84%E5%A5%87%E6%80%AA%E9%97%AE%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yangxinyu7427.github.io" target="_blank">摆烂仙人</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/oceanbase/">oceanbase</a></div><div class="post_share"><div class="social-share" data-image="/img/pic_typemoon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/04/15/%E4%BD%BF%E7%94%A8Hexo%E6%A1%86%E6%9E%B6-butterfly%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="使用Hexo框架+butterfly搭建博客"><img class="cover" src="/img/pic_typemoon.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">使用Hexo框架+butterfly搭建博客</div></div></a></div><div class="next-post pull-right"><a href="/2024/04/10/python%E9%81%87%E5%88%B0%E8%BF%87%E7%9A%84%E5%A5%87%E6%80%AA%E9%97%AE%E9%A2%98/" title="python遇到过的奇怪问题"><img class="cover" src="/img/pic_typemoon.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">python遇到过的奇怪问题</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/pic_asuka.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xyyang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/yangxinyu7427" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:742707786@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">全体目光向我看齐，我宣布个事儿</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ubuntu%E7%B3%BB%E7%BB%9F%E4%B8%8AOBclient%E6%97%A0%E6%B3%95%E7%94%A8backspace"><span class="toc-number">1.</span> <span class="toc-text">ubuntu系统上OBclient无法用backspace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8vscode-debug%E8%B0%83%E8%AF%95oceanbase"><span class="toc-number">2.</span> <span class="toc-text">使用vscode debug调试oceanbase</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/04/15/%E4%BD%BF%E7%94%A8Hexo%E6%A1%86%E6%9E%B6-butterfly%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="使用Hexo框架+butterfly搭建博客"><img src="/img/pic_typemoon.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用Hexo框架+butterfly搭建博客"/></a><div class="content"><a class="title" href="/2024/04/15/%E4%BD%BF%E7%94%A8Hexo%E6%A1%86%E6%9E%B6-butterfly%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="使用Hexo框架+butterfly搭建博客">使用Hexo框架+butterfly搭建博客</a><time datetime="2024-04-15T07:03:40.000Z" title="发表于 2024-04-15 15:03:40">2024-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/10/oceanbase%E9%81%87%E5%88%B0%E8%BF%87%E7%9A%84%E5%A5%87%E6%80%AA%E9%97%AE%E9%A2%98/" title="oceanbase遇到过的奇怪问题"><img src="/img/pic_typemoon.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="oceanbase遇到过的奇怪问题"/></a><div class="content"><a class="title" href="/2024/04/10/oceanbase%E9%81%87%E5%88%B0%E8%BF%87%E7%9A%84%E5%A5%87%E6%80%AA%E9%97%AE%E9%A2%98/" title="oceanbase遇到过的奇怪问题">oceanbase遇到过的奇怪问题</a><time datetime="2024-04-10T12:46:09.000Z" title="发表于 2024-04-10 20:46:09">2024-04-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/10/python%E9%81%87%E5%88%B0%E8%BF%87%E7%9A%84%E5%A5%87%E6%80%AA%E9%97%AE%E9%A2%98/" title="python遇到过的奇怪问题"><img src="/img/pic_typemoon.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python遇到过的奇怪问题"/></a><div class="content"><a class="title" href="/2024/04/10/python%E9%81%87%E5%88%B0%E8%BF%87%E7%9A%84%E5%A5%87%E6%80%AA%E9%97%AE%E9%A2%98/" title="python遇到过的奇怪问题">python遇到过的奇怪问题</a><time datetime="2024-04-10T07:58:32.000Z" title="发表于 2024-04-10 15:58:32">2024-04-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/09/leetcode-%E5%93%88%E5%B8%8C%E8%A1%A8/" title="leetcode-哈希表"><img src="/img/pic_arc2.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode-哈希表"/></a><div class="content"><a class="title" href="/2024/04/09/leetcode-%E5%93%88%E5%B8%8C%E8%A1%A8/" title="leetcode-哈希表">leetcode-哈希表</a><time datetime="2024-04-09T11:31:34.000Z" title="发表于 2024-04-09 19:31:34">2024-04-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/09/leetcode-%E9%93%BE%E8%A1%A8/" title="leetcode-链表"><img src="/img/pic_arc2.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode-链表"/></a><div class="content"><a class="title" href="/2024/04/09/leetcode-%E9%93%BE%E8%A1%A8/" title="leetcode-链表">leetcode-链表</a><time datetime="2024-04-09T11:31:00.000Z" title="发表于 2024-04-09 19:31:00">2024-04-09</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/pic_typemoon.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By xyyang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.14.0-b1"></script><script src="/js/main.js?v=4.14.0-b1"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.umd.min.js"></script><script>(() => {
+  const panguFn = () => {
+    if (typeof pangu === 'object') pangu.autoSpacingPage()
+    else {
+      btf.getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+        .then(() => {
+          pangu.autoSpacingPage()
+        })
+    }
+  }
+
+  const panguInit = () => {
+    if (false){
+      GLOBAL_CONFIG_SITE.isPost && panguFn()
+    } else {
+      panguFn()
+    }
+  }
+
+  btf.addGlobalFn('pjaxComplete', panguInit, 'pangu')
+  document.addEventListener('DOMContentLoaded', panguInit)
+})()</script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
